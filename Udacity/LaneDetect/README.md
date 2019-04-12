@@ -18,7 +18,7 @@
 ---
 
 算法示例图像
-![image1](./test_images/solidWhiteRight.jpg)
+![image1](test_images/solidWhiteRight.jpg)
 
 ---
 
