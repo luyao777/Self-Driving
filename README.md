@@ -1,6 +1,6 @@
 # Self-Driving
 
-![](<https://img.shields.io/badge/-Self--Driving-red.svg>)![](<https://img.shields.io/badge/license-MIT-green.svg>)![](<https://img.shields.io/badge/stuatus-update-blue.svg>)
+![](<https://img.shields.io/badge/-Self--Driving-red.svg>) ![](<https://img.shields.io/badge/license-MIT-green.svg>) ![](<https://img.shields.io/badge/stuatus-update-blue.svg>)
 
 ![self-driving-car](img/self-driving-car.png)
 
