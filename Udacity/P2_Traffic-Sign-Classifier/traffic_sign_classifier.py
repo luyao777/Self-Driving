@@ -13,6 +13,8 @@ import matplotlib.pyplot as plt
 os.environ["CUDA_VISIBLE_DEVICES"] = '0,1,2,3'
 vis = visdom.Visdom(env=u'traffic_sign_classifier',use_incoming_socket=False)
 
+# 设置常量
+
 BATCH_SIZE = 64
 LR = 0.01
 WEIGHT_DECAY = 0.00005
@@ -21,16 +23,19 @@ NUM_WORKER = 4
 PATIENCE = 4
 EPOCH = 20
 
+# 路径设置
 train_img_path = './GTSRB/Final_Training/Images'
 test_img_path = './GTSRB/Final_Test/Images'
 model_path = './model'
 
+# 构造pytorch数据集类
 class GTSRB(data.Dataset):
     def __init__(self, root, is_train=True, transform=None):
         self.root = root
         self.transform = transform
         self.is_train = is_train  # training set or test set
         
+        # 参考GTSRB给出的数据读取函数
         self.images = [] # images
         self.labels = [] # corresponding labels
 
@@ -67,14 +72,13 @@ class GTSRB(data.Dataset):
         
         if self.transform is not None:
             img = self.transform(img)
-#         print(img.shape)
         target = torch.tensor(int(target))
-#         print(target)
         return img, target
 
     def __len__(self):
         return len(self.labels)
-    
+
+# 构造基于VGG16的神经网络模型
 class VGG_GTSRB(torch.nn.Module):
     def __init__(self):
         torch.nn.Module.__init__(self)
@@ -93,7 +97,7 @@ class VGG_GTSRB(torch.nn.Module):
             torch.nn.ReLU(),
             torch.nn.Dropout(),
  
-            #fc8
+            #fc8，最后分类改成43类，0-42
             torch.nn.Linear(4096, 43))
         
         self._initialize_weights()
@@ -117,7 +121,8 @@ class VGG_GTSRB(torch.nn.Module):
         X = X.view(X.size(0),-1)
         X = self.classifier(X)
         return X
-    
+
+# 数据预处理部分，将图片缩放到VGG16所需要的448*448大小
 train_transforms = torchvision.transforms.Compose([
             torchvision.transforms.Resize(size=512),  # Let smaller edge match
             torchvision.transforms.RandomCrop(size=448),
@@ -128,8 +133,7 @@ test_transforms = torchvision.transforms.Compose([
             torchvision.transforms.CenterCrop(size=448),
             torchvision.transforms.ToTensor()
         ])   
-    
-    
+       
 train_dataset = GTSRB(train_img_path,is_train=True,transform=train_transforms)
 test_dataset = GTSRB(test_img_path,is_train=False,transform=test_transforms)
 train_loader = torch.utils.data.DataLoader(
@@ -139,16 +143,12 @@ test_loader = torch.utils.data.DataLoader(
             test_dataset, batch_size=BATCH_SIZE,
             shuffle=False, num_workers=NUM_WORKER, pin_memory=True)
 
-    
-
-net = net = torch.nn.DataParallel(VGG_GTSRB()).cuda()
+net = torch.nn.DataParallel(VGG_GTSRB()).cuda() 
 criterion = torch.nn.CrossEntropyLoss().cuda()
 solver = torch.optim.SGD(
             net.parameters(), lr=LR,
             momentum=MOMENTUM, weight_decay=WEIGHT_DECAY)
 scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(solver,patience=PATIENCE)
-
-
 
 best_score = 0
 best_epoch = 0
