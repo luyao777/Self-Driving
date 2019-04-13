@@ -8,12 +8,12 @@
 
 MIT 6.S094: Deep Learning for Self-Driving Cars
 
-- Deep Traffic
+- [Deep Traffic](MIT/DeepTraffic)
 - SegFuse
 
 Udacity
-- Line Dectect
-- Traffic Sign Classifier
+- [Line Dectect](Udacity/P1_Lane-Detect)
+- [Traffic Sign Classifier](Udacity/P2_Traffic-Sign-Classifier)
 
 The rest is coming soon.
 
