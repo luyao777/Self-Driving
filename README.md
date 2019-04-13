@@ -1,6 +1,6 @@
 # Self-Driving
 
-
+![](<https://img.shields.io/badge/-Self--Driving-red.svg>)![](<https://img.shields.io/badge/license-MIT-green.svg>)![](<https://img.shields.io/badge/stuatus-update-blue.svg>)
 
 ![self-driving-car](img/self-driving-car.png)
 
@@ -24,6 +24,8 @@ The rest is coming soon.
 [MIT 6.S094 视频课程](<https://ai.yanxishe.com/page/groupDetail/21>)
 
 [Udacity Github](<https://github.com/udacity>)
+
+[Udacity Self-driving Car Simulator](<https://github.com/udacity/self-driving-car-sim>)
 
 [Udacity Term-1 中文教程](<https://github.com/yajian/self-driving-car>)
 
